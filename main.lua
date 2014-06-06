@@ -15,9 +15,11 @@ end)
 RegisterEvent("Chat", function(event)
     if event.inbound and event.type == ChatPrivate then
         if event.message == '!help' or event.message == '!about' then
-            event.conn:SendChatPrivate(event.player, 'test lua bot')
+            event.conn:SendChatPrivate(event.player, 'test lua bot. https://github.com/plushmonkey/jackal')
         elseif event.message == '!owner' then
             event.conn:SendChatPrivate(event.player, 'Owner: monkey')
+        elseif event.message == '!commands' then
+            event.conn:SendChatPrivate(event.player, 'Commands: !help, !owner, !commands, !shutdown')
         elseif event.message == '!shutdown' then
             mods = {"Dr Brain", "Ceiu", "Noldec", "CDB-Man", "monkey", "Rivel"}
             for i, name in ipairs(mods) do

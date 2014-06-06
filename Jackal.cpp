@@ -63,7 +63,8 @@ void Jackal::ChatHandler(const jackal::util::Tokenizer &tokens) {
         case ChatEvent::ChatArena:
         case ChatEvent::ChatCommand:
         {
-            jackal::util::Tokenizer chat_tokens(raw, ':', 3);
+            jackal::util::Tokenizer chat_tokens(raw);
+            chat_tokens.tokenize(':', 3);
             event.SetMessage(chat_tokens[2]);
         }
         break;
@@ -73,14 +74,16 @@ void Jackal::ChatHandler(const jackal::util::Tokenizer &tokens) {
         case ChatEvent::ChatFrequency:
         case ChatEvent::ChatModerator:
         {
-            jackal::util::Tokenizer chat_tokens(raw, ':', 4);
+            jackal::util::Tokenizer chat_tokens(raw);
+            chat_tokens.tokenize(':', 4);
             event.SetPlayer(chat_tokens[2]);
             event.SetMessage(chat_tokens[3]);
         }
         break;
         case ChatEvent::ChatChannel:
         {
-            jackal::util::Tokenizer chat_tokens(raw, ':', 4);
+            jackal::util::Tokenizer chat_tokens(raw);
+            chat_tokens.tokenize(':', 4);
             int channel = atoi(chat_tokens[2].c_str());
             event.SetChannel(channel);
             event.SetMessage(chat_tokens[3]);
@@ -88,13 +91,15 @@ void Jackal::ChatHandler(const jackal::util::Tokenizer &tokens) {
         break;
         case ChatEvent::ChatSysop:
         {
-            jackal::util::Tokenizer chat_tokens(raw, ':', 3);
+            jackal::util::Tokenizer chat_tokens(raw);
+            chat_tokens.tokenize(':', 3);
             event.SetMessage(chat_tokens[2]);
         }
         break;
         case ChatEvent::ChatSquad:
         {
-            jackal::util::Tokenizer chat_tokens(raw, ':', 5);
+            jackal::util::Tokenizer chat_tokens(raw);
+            chat_tokens.tokenize(':', 5);
             event.SetSquad(chat_tokens[2]);
             event.SetPlayer(chat_tokens[3]);
             event.SetMessage(chat_tokens[4]);
@@ -186,7 +191,9 @@ int Jackal::Run(const std::string &username, const std::string &password) {
             std::string tohandle = unhandled.substr(0, pos + 1);
             unhandled.replace(0, pos + 1, "");
 
-            jackal::util::Tokenizer tokens(tohandle.substr(0, tohandle.size() - 1), ':');
+            jackal::util::Tokenizer tokens(tohandle.substr(0, tohandle.size() - 1));
+            
+            tokens.tokenize(':');
 
             if (tokens.size() == 0) {
                 std::cerr << "Error with data received." << std::endl;
