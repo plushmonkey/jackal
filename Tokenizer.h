@@ -38,6 +38,7 @@ class Tokenizer {
                 if (max > 0 && cur >= max) {
                     std::getline(ss, token);
                     m_Tokens.push_back(token);
+                    cur++;
                     break;
                 }
 
